@@ -10,15 +10,15 @@ class GameOfLife {
    */
 
   makeBoard() {
-    // TODO: Create and return an 2D Array 
-    // with `this.heigh` as rows and `this.width` as cols.
-    // For example, given a height of 4 and a width of 3, it will generate:
-    // [
-    //  [0, 0, 0],
-    //  [0, 0, 0],
-    //  [0, 0, 0],
-    //  [0, 0, 0],
-    // ]
+    let newBoard = [];
+    for (let i = 0; i < this.height; ++i) {
+      let tempArr = [];
+      for (let j = 0; j < this.width; ++j) {
+        tempArr.push(0);
+      }
+      newBoard.push(tempArr)
+    }
+    return newBoard;
   }
 
 
