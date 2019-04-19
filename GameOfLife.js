@@ -5,11 +5,7 @@ class GameOfLife {
     this.board = this.makeBoard();
   }
 
-  /**
-   * Returns a 2D Array
-   */
-
-  makeBoard() {
+  makeBoard = () => {
     let newBoard = [];
     for (let i = 0; i < this.height; ++i) {
       let tempArr = [];
@@ -26,16 +22,28 @@ class GameOfLife {
    * Return the amount of living neighbors around a given coordinate.
    */
 
-  livingNeighbors(row, col) {
+  livingNeighbors = (row, col) => {
     // TODO: Return the count of living neighbors.
   }
 
 
+  getCell = (row, col) => {
+    return this.board[row][col];
+  };
+  
+  setCell = (value, row, col) => {
+    this.board[row][col] = value;
+  };
+  
+  toggleCell = (row, col) => {
+    this.board[row][col] = this.board[row][col] ? 0 : 1;
+  };
+  
   /**
    * Given the present board, apply the rules to generate a new board
    */
   
-  tick() {
+  tick = () => {
     const newBoard = this.makeBoard();
     // TODO: Here is where you want to loop through all the cells
     // on the existing board and determine, based on it's neighbors,
