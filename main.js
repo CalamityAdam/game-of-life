@@ -13,7 +13,7 @@ const gol = new GameOfLife(width, height);
  */
 
 // Actual table cells
-const tds = [];
+const cells = [];
 
 // <table> element
 const table = document.createElement("tbody");
@@ -28,7 +28,7 @@ for (let h = 0; h < height; h++) {
     // letting us fetch it in a click listener later.
     td.dataset.row = h;
     td.dataset.col = w;
-    tds.push(td);
+    cells.push(td);
     tr.append(td);
   }
   table.append(tr);
@@ -41,18 +41,14 @@ document.getElementById("board").append(table);
  */
 
 const paint = () => {
-  // TODO:
-  //   1. For each <td> in the table:
-  //     a. If its corresponding cell in gol instance is alive,
-  //        give the <td> the `alive` CSS class.
-  //     b. Otherwise, remove the `alive` class.
-  //
-  // To find all the <td>s in the table, you might query the DOM for them, or you
-  // could choose to collect them when we create them in createTable.
-  //
-  // HINT:
-  //   https://developer.mozilla.org/en-US/docs/Web/API/Element/classList
-  //   https://developer.mozilla.org/en-US/docs/Web/API/Element/getElementsByTagName
+  cells.forEach(td => {
+    const cellValue = gol.getCell(td.dataset.row, td.dataset.col);
+    if (cellValue === 1) {
+      td.classList.add('alive');
+    } else {
+      td.classList.remove('alive');
+    }
+  });
 }
 
 
@@ -60,25 +56,60 @@ const paint = () => {
  * Event Listeners
  */
 
-document.getElementById("board").addEventListener("click", event => {
+document
+  .getElementById("board")
+  .addEventListener("click", ({ target: { dataset: { row, col } } }) => {
+  gol.toggleCell(row, col);
+  paint();
   // TODO: Toggle clicked cell (event.target) and paint
 });
 
-document.getElementById("step_btn").addEventListener("click", event => {
+document
+  .getElementById("step_btn")
+  .addEventListener("click", event => {
+    gol.tick();
+    paint();
   // TODO: Do one gol tick and paint
 });
 
-document.getElementById("play_btn").addEventListener("click", event => {
+// let interval = Number(document.getElementById('interval').value) * 100
+let interval = null;
+
+document
+  .getElementById("play_btn")
+  .addEventListener("click", event => {
+  if (!interval) {
+    interval = setInterval(() => {
+      gol.tick();
+      paint();
+    }, 100);
+  } else {
+    clearInterval(interval);
+    interval = null;
+  }
   // TODO: Start playing by calling `tick` and paint
   // repeatedly every fixed time interval.
   // HINT:
   // https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setInterval
 });
 
-document.getElementById("random_btn").addEventListener("click", event => {
+document
+  .getElementById("random_btn")
+  .addEventListener("click", event => {
+    gol.forEachCell((row, col) => {
+      let value = ((Math.random() * 100) > 75) ? 1 : 0;
+      gol.setCell(value, row, col);
+    });
+    paint();
   // TODO: Randomize the board and paint
 });
 
-document.getElementById("clear_btn").addEventListener("click", event => {
+document
+  .getElementById("clear_btn")
+  .addEventListener("click", event => {
+    gol.forEachCell((row, col) => {
+      gol.setCell(0, row, col);
+    });
+    paint();
   // TODO: Clear the board and paint
 });
