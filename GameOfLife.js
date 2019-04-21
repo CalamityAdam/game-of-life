@@ -7,9 +7,9 @@ class GameOfLife {
 
   makeBoard = () => {
     let newBoard = [];
-    for (let i = 0; i < this.height; ++i) {
+    for (let row = 0; row < this.height; ++row) {
       let tempArr = [];
-      for (let j = 0; j < this.width; ++j) {
+      for (let col = 0; col < this.width; ++col) {
         tempArr.push(0);
       }
       newBoard.push(tempArr)
@@ -23,9 +23,17 @@ class GameOfLife {
    */
 
   livingNeighbors = (row, col) => {
-    // TODO: Return the count of living neighbors.
+    return (
+      this.getCell(row - 1, col - 1) + 
+      this.getCell(row - 1, col) + 
+      this.getCell(row - 1, col + 1) + 
+      this.getCell(row, col - 1) + 
+      this.getCell(row, col + 1 ) + 
+      this.getCell(row + 1, col - 1) + 
+      this.getCell(row + 1, col) + 
+      this.getCell(row + 1, col + 1)
+    );
   }
-
 
   getCell = (row, col) => {
     return this.board[row][col];
@@ -39,12 +47,27 @@ class GameOfLife {
     this.board[row][col] = this.board[row][col] ? 0 : 1;
   };
   
+  cellExists = (row, col) => {
+    return row >= 0 && row < this.height && col >= 0 && col < this.width;
+  };
+  
+  forEachCell = (callback) => {
+    for (let row = 0; row < this.height; ++row) {
+      for (let col = 0; col < this.width; ++col) {
+        callback(row, col);
+      };
+    };
+  };
+  
   /**
    * Given the present board, apply the rules to generate a new board
    */
   
   tick = () => {
     const newBoard = this.makeBoard();
+    
+    
+    
     // TODO: Here is where you want to loop through all the cells
     // on the existing board and determine, based on it's neighbors,
     // whether the cell should be dead or alive in the new board 
