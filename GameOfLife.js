@@ -93,23 +93,14 @@ class GameOfLife {
    */
   
   tick = () => {
+    // 1. Count alive neighbors for all cells
+    // 2. Set the next state of all cells in newBoard, based on their current alive neighbors
     const newBoard = this.makeBoard();
-    
     this.forEachCell((row, col) => {
       const livingNeighbors = this.livingNeighbors(row, col);
       const nextCell = this.conwayRule(this.getCell(row, col), livingNeighbors);
       newBoard[row][col] = nextCell;
     });
-    
-    // TODO: Here is where you want to loop through all the cells
-    // on the existing board and determine, based on it's neighbors,
-    // whether the cell should be dead or alive in the new board 
-    // (the next iteration of the game) 
-    //
-    // You need to:
-    // 1. Count alive neighbors for all cells
-    // 2. Set the next state of all cells in newBoard,
-    // based on their current alive neighbors
     this.board = newBoard;
   }
 }

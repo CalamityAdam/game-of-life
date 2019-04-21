@@ -1,5 +1,5 @@
-const width = 25;
-const height = 20; // width and height dimensions of the board
+const width = 50;
+const height = 40; // width and height dimensions of the board
 
 /**
  * Create a Game of Life instance
@@ -61,7 +61,7 @@ document
   .addEventListener("click", ({ target: { dataset: { row, col } } }) => {
   gol.toggleCell(row, col);
   paint();
-  // TODO: Toggle clicked cell (event.target) and paint
+  // Toggle clicked cell (event.target) and paint
 });
 
 document
@@ -69,7 +69,7 @@ document
   .addEventListener("click", event => {
     gol.tick();
     paint();
-  // TODO: Do one gol tick and paint
+  //Do one gol tick and paint
 });
 
 // let interval = Number(document.getElementById('interval').value) * 100
@@ -87,10 +87,7 @@ document
     clearInterval(interval);
     interval = null;
   }
-  // TODO: Start playing by calling `tick` and paint
-  // repeatedly every fixed time interval.
-  // HINT:
-  // https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setInterval
+  // Start playing by calling `tick` and paint
 });
 
 document
@@ -101,7 +98,7 @@ document
       gol.setCell(value, row, col);
     });
     paint();
-  // TODO: Randomize the board and paint
+  // Randomize the board and paint
 });
 
 document
@@ -111,5 +108,5 @@ document
       gol.setCell(0, row, col);
     });
     paint();
-  // TODO: Clear the board and paint
+  // Clear the board and paint
 });
